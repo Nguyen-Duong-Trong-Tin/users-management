@@ -12,12 +12,7 @@
           <li class="breadcrumb-item active" aria-current="page">
             <span></span>Overview
             <i
-              class="
-                mdi mdi-alert-circle-outline
-                icon-sm
-                text-primary
-                align-middle
-              "
+              class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"
             ></i>
           </li>
         </ul>
@@ -76,6 +71,7 @@
         </div>
       </div>
     </div>
+    <demo-life-cycle></demo-life-cycle>
     <the-user-management></the-user-management>
     <div class="row">
       <div class="col-12 grid-margin stretch-card">
@@ -84,13 +80,7 @@
             <h4 class="card-title">Recent Updates</h4>
             <div class="d-flex">
               <div
-                class="
-                  d-flex
-                  align-items-center
-                  mr-4
-                  text-muted
-                  font-weight-light
-                "
+                class="d-flex align-items-center mr-4 text-muted font-weight-light"
               >
                 <i class="mdi mdi-account-outline icon-sm mr-2"></i>
                 <span>jack Menqu</span>
@@ -286,12 +276,7 @@
                 placeholder="What do you need to do today?"
               />
               <button
-                class="
-                  add
-                  btn btn-gradient-primary
-                  font-weight-bold
-                  todo-list-add-btn
-                "
+                class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn"
                 id="add-task"
               >
                 Add
@@ -362,10 +347,12 @@
 </template>
 
 <script>
+import DemoLifeCycle from "./DemoLifeCycle.vue";
 import TheUserManagement from "./TheUserManagement.vue";
 
 export default {
   components: {
+    DemoLifeCycle,
     TheUserManagement,
   },
 };
