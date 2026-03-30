@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex/dist/vuex.cjs.js';
+import { createNamespacedHelpers } from 'vuex'
 
 import UserItem from "./UserItem.vue";
+
+const { mapState, mapGetters } = createNamespacedHelpers('user');
 
 export default {
   components: {

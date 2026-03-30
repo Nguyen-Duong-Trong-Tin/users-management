@@ -20,7 +20,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex/dist/vuex.cjs.js';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapActions } = createNamespacedHelpers('user');
 
 export default {
   name: "SearchBar",
