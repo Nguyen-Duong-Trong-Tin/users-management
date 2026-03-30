@@ -30,7 +30,7 @@ const store = createStore({
           type: "CLIENT",
         },
       ],
-      searchName: ""
+      searchName: "",
     };
   },
   getters: {
@@ -41,21 +41,45 @@ const store = createStore({
       return state.users.filter((user) => user.gender === gender);
     },
     usersBySearchName: (state) => {
-      return state.users.filter((user) => user.name.toLowerCase().includes(state.searchName.toLowerCase()));
-    }
+      return state.users.filter((user) =>
+        user.name.toLowerCase().includes(state.searchName.toLowerCase())
+      );
+    },
   },
   mutations: {
     setSearchName(state, payload) {
       state.searchName = payload;
-    }
+    },
+    addUser(state, payload) {
+      console.log(payload);
+      state.users.push(payload);
+    },
+    removeUser(state, payload) {
+      state.users = state.users.filter((user) => user.id !== payload);
+    },
   },
   actions: {
     searchUsersByName(context, payload) {
       setTimeout(() => {
         context.commit("setSearchName", payload);
       }, 1000);
-    }
-  }
+    },
+    addUser(context, payload) {
+      const user = {
+        id: Date.now(),
+        name: payload.userName,
+        // avatar: payload.avatar,
+        avatar: "hinh",
+        age: payload.age,
+        description: payload.description,
+        programmingLanguage: payload.programmingLanguages,
+      };
+      context.commit("addUser", user);
+    },
+    removeUser(context, payload) {
+      context.commit("removeUser", payload);
+    },
+  },
 });
 
 const app = createApp(App);

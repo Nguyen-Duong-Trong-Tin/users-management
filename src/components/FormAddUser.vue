@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <form class="forms-sample">
+      <form class="forms-sample" @submit.prevent="handleSubmit">
         <div class="form-group">
           <label for="username">Username</label>
           <input
@@ -9,6 +9,7 @@
             class="form-control"
             id="username"
             placeholder="Username"
+            v-model="user.userName"
           />
         </div>
         <div class="form-group">
@@ -18,6 +19,7 @@
             class="form-control"
             id="age"
             placeholder="Age"
+            v-model="user.age"
           />
         </div>
         <div class="form-group">
@@ -27,6 +29,7 @@
             class="form-control"
             id="avatar"
             placeholder="avatar"
+            v-model="user.avatar"
           />
         </div>
         <div class="form-group">
@@ -34,37 +37,64 @@
           <div class="form-row-flex">
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> JavaScript
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="Javascript"
+                  v-model="user.programmingLanguages" />
+                JavaScript
                 <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> Java
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="Java"
+                  v-model="user.programmingLanguages" />
+                Java <i class="input-helper"></i
+              ></label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="PHP"
+                  v-model="user.programmingLanguages" />
+                PHP <i class="input-helper"></i
+              ></label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="Python"
+                  v-model="user.programmingLanguages" />
+                Python
                 <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> PHP
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="C#"
+                  v-model="user.programmingLanguages" />
+                C# <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> Python
-                <i class="input-helper"></i
-              ></label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> C#
-                <i class="input-helper"></i
-              ></label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> C/C++
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="C/C++"
+                  v-model="user.programmingLanguages" />
+                C/C++
                 <i class="input-helper"></i
               ></label>
             </div>
@@ -80,7 +110,8 @@
                   class="form-check-input"
                   name="gender"
                   id="gender"
-                  value="" />
+                  value="Nam"
+                  v-model="user.gender" />
                 Nam <i class="input-helper"></i
               ></label>
             </div>
@@ -91,7 +122,8 @@
                   class="form-check-input"
                   name="gender"
                   id="gender"
-                  value="" />
+                  value="Nữ"
+                  v-model="user.gender" />
                 Nữ <i class="input-helper"></i
               ></label>
             </div>
@@ -102,7 +134,8 @@
                   class="form-check-input"
                   name="gender"
                   id="gender"
-                  value="" />
+                  value="Khác"
+                  v-model="user.gender" />
                 Khác <i class="input-helper"></i
               ></label>
             </div>
@@ -111,7 +144,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Type User : </label>
           <div class="col-sm-9">
-            <select class="form-control">
+            <select class="form-control" v-model="user.typeUser">
               <option>Admin</option>
               <option>Client</option>
             </select>
@@ -119,7 +152,12 @@
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea class="form-control" id="description" rows="4"></textarea>
+          <textarea
+            class="form-control"
+            id="description"
+            rows="4"
+            v-model="user.description"
+          ></textarea>
         </div>
         <button type="submit" class="btn btn-gradient-primary mr-2">
           Submit
@@ -131,7 +169,32 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+
+export default {
+  name: "FormAddUser",
+  data() {
+    return {
+      user: {
+        userName: "",
+        age: 0,
+        avatar: "",
+        programmingLanguages: [],
+        gender: "Nam",
+        typeUser: "Client",
+        description: "",
+      },
+    };
+  },
+  methods: {
+    handleSubmit() {
+      this.addUser(this.user);
+    },
+    ...mapActions({
+      addUser: "addUser",
+    }),
+  },
+};
 </script>
 
 <style>
