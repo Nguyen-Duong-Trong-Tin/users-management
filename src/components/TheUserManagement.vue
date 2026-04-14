@@ -38,16 +38,20 @@
         :isOpen="isOpenModalCartList"
         :handelCloseModal="handleCloseModalCartList"
       >
-        <form-user></form-user>
+        <form-user @close="handleCloseModalCartList"></form-user>
       </app-modal>
     </teleport>
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
 import FormUser from "./FormUser.vue";
 import SearchBar from "./SearchBar.vue";
 import UserList from "./UserList.vue";
+
+const { mapActions } = createNamespacedHelpers("user");
+
 export default {
   components: {
     FormUser,
@@ -64,8 +68,15 @@ export default {
       this.isOpenModalCartList = true; // mở modal
     },
     handleCloseModalCartList() {
+      console.log("OKOK");
       this.isOpenModalCartList = false; // đóng modal
     },
+    ...mapActions({
+      getUsers: "getUsers",
+    }),
+  },
+  created() {
+    this.getUsers();
   },
 };
 </script>

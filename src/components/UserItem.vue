@@ -1,28 +1,43 @@
 <template>
   <tr>
     <td>
-      <img src="assets/images/faces/face1.jpg" class="mr-2" alt="image" />
+      <img :src="user.avatar" class="mr-2 img-thumbnail" alt="image" />
       {{ user.name }}
     </td>
     <td>{{ user.age }}</td>
     <td>
-      <label class="badge badge-gradient-primary mr-2" v-for="(item, index) in user.programmingLanguage" :key="index">{{
-        item }}</label>
+      <label
+        class="badge badge-gradient-primary mr-2"
+        v-for="(item, index) in user.programmingLanguage"
+        :key="index"
+        >{{ item }}</label
+      >
     </td>
     <td>{{ user.gender }}</td>
     <td>
-      <button type="button" class="mr-2 btn btn-gradient-danger btn-icon-text" @click="handleRemoveUser">
+      <button
+        type="button"
+        class="mr-2 btn btn-gradient-danger btn-icon-text"
+        @click="handleRemoveUser"
+      >
         <i class="mdi mdi-delete btn-icon-prepend"></i> Remove
       </button>
-      <button type="button" class="btn btn-gradient-info btn-icon-text" @click="handleOpenModalEditUser">
+      <button
+        type="button"
+        class="btn btn-gradient-info btn-icon-text"
+        @click="handleOpenModalEditUser"
+      >
         <i class="mdi mdi-border-color btn-icon-prepend"></i> Edit
       </button>
     </td>
   </tr>
 
   <teleport to="#app">
-    <app-modal :isOpen="isOpenModalEditUser" :handelCloseModal="handleCloseModalEditUser">
-      <form-user :userProp="user"></form-user>
+    <app-modal
+      :isOpen="isOpenModalEditUser"
+      :handelCloseModal="handleCloseModalEditUser"
+    >
+      <form-user :userProp="user" @close="handleCloseModalEditUser"></form-user>
     </app-modal>
   </teleport>
 </template>
@@ -32,7 +47,7 @@ import { createNamespacedHelpers } from "vuex";
 
 import FormUser from "./FormUser.vue";
 
-const { mapActions } = createNamespacedHelpers('user');
+const { mapActions } = createNamespacedHelpers("user");
 
 export default {
   name: "UserItem",
@@ -43,12 +58,12 @@ export default {
     },
   },
   components: {
-    FormUser
+    FormUser,
   },
   data() {
     return {
-      isOpenModalEditUser: false
-    }
+      isOpenModalEditUser: false,
+    };
   },
   methods: {
     handleOpenModalEditUser() {

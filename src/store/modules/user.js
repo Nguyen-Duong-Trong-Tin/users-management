@@ -1,27 +1,8 @@
+import { createUser, getUsers, removeUser, updateUser } from "../../apis/user";
+
 const state = () => {
   return {
-    users: [
-      {
-        id: 1,
-        name: "Nguyễn Phong Hào",
-        avatar: "hinh",
-        age: 23,
-        description: "thân thiện , hoc hỏi nhanh",
-        programmingLanguage: ["JS", "JAVA"],
-        gender: "Nam",
-        type: "Admin",
-      },
-      {
-        id: 2,
-        name: "Phan Thùy Duyên",
-        avatar: "hinh",
-        age: 22,
-        description: "thân thiện , hoc hỏi nhanh",
-        programmingLanguage: ["PHP", "C#"],
-        gender: "Nữ",
-        type: "Client",
-      },
-    ],
+    users: [],
     searchName: "",
   };
 };
@@ -35,20 +16,17 @@ const getters = {
   },
   usersBySearchName: (state) => {
     return state.users.filter((user) =>
-      user.name.toLowerCase().includes(state.searchName.toLowerCase()),
+      user.name.toLowerCase().includes(state.searchName.toLowerCase())
     );
   },
 };
 
 const mutations = {
+  setUsers(state, payload) {
+    state.users = payload;
+  },
   setSearchName(state, payload) {
     state.searchName = payload;
-  },
-  addUser(state, payload) {
-    state.users.push(payload);
-  },
-  removeUser(state, payload) {
-    state.users = state.users.filter((user) => user.id !== payload);
   },
   updateUser(state, payload) {
     const index = state.users.findIndex((user) => user.id === payload.id);
@@ -59,12 +37,16 @@ const mutations = {
 };
 
 const actions = {
+  async getUsers(context) {
+    const users = await getUsers();
+    context.commit("setUsers", users);
+  },
   searchUsersByName(context, payload) {
     setTimeout(() => {
       context.commit("setSearchName", payload);
     }, 1000);
   },
-  addUser(context, payload) {
+  async addUser(context, payload) {
     const user = {
       id: Date.now(),
       name: payload.userName,
@@ -74,23 +56,27 @@ const actions = {
       description: payload.description,
       programmingLanguage: payload.programmingLanguages,
     };
-    context.commit("addUser", user);
+
+    await createUser(user);
+    context.dispatch("getUsers");
   },
-  removeUser(context, payload) {
-    context.commit("removeUser", payload);
+  async removeUser(context, payload) {
+    await removeUser(payload);
+
+    context.dispatch("getUsers");
   },
-  updateUser(context, payload) {
+  async updateUser(context, payload) {
     const user = {
       id: payload.id,
       name: payload.userName,
-      // avatar: payload.avatar,
-      avatar: "hinh",
+      avatar: payload.avatar ? payload.avatar : "hinh",
       age: payload.age,
       description: payload.description,
       programmingLanguage: payload.programmingLanguages,
     };
 
-    context.commit("updateUser", user);
+    await updateUser(user);
+    context.dispatch("getUsers");
   },
 };
 
