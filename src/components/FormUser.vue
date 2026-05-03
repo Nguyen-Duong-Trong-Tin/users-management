@@ -169,55 +169,54 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-
-const { mapActions } = createNamespacedHelpers("user");
+import { useStore } from "vuex";
+import { reactive, toRefs } from "vue";
 
 export default {
-  name: "FormUser",
   props: {
     userProp: {
       type: Object,
       default: undefined,
     },
   },
-  data() {
-    return {
-      user: {
-        userName: "",
-        age: 0,
-        avatar: "",
-        programmingLanguages: [],
-        gender: "Nam",
-        typeUser: "Client",
-        description: "",
-      },
-    };
-  },
-  methods: {
-    async handleSubmit() {
-      if (!this.userProp) {
-        await this.addUser(this.user);
+  setup(props, ctx) {
+    const store = useStore();
+    const { userProp } = toRefs(props);
+    const user = reactive({
+      userName: "",
+      age: 0,
+      avatar: "",
+      programmingLanguages: [],
+      gender: "Nam",
+      typeUser: "Client",
+      description: "",
+    });
+
+    const addUser = (user) => store.dispatch("user/addUser", user);
+    const updateUser = (user) => store.dispatch("user/updateUser", user);
+
+    const handleSubmit = async () => {
+      const payload = { ...user };
+
+      if (!userProp.value) {
+        await addUser(payload);
       } else {
-        await this.updateUser({ ...this.user });
+        await updateUser({ id: userProp.value.id, ...payload });
       }
 
-      this.$emit("close");
-    },
-    ...mapActions({
-      addUser: "addUser",
-      updateUser: "updateUser",
-    }),
-  },
-  created() {
-    if (this.userProp) {
-      this.user = {
-        ...this.userProp,
-        userName: this.userProp.name,
-        programmingLanguages: this.userProp.programmingLanguage,
-        typeUser: this.userProp.type,
-      };
+      ctx.emit("close");
+    };
+
+    if (userProp.value) {
+      user.userName = userProp.value.name;
+      user.programmingLanguages = userProp.value.programmingLanguages;
+      user.typeUser = userProp.value.typeUser;
     }
+
+    return {
+      user,
+      handleSubmit,
+    };
   },
 };
 </script>
