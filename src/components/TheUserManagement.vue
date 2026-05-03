@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
+import { ref } from "vue";
+import { useStore } from "vuex";
+
 import FormUser from "./FormUser.vue";
 import SearchBar from "./SearchBar.vue";
 import UserList from "./UserList.vue";
-
-const { mapActions } = createNamespacedHelpers("user");
 
 export default {
   components: {
@@ -58,25 +58,27 @@ export default {
     SearchBar,
     UserList,
   },
-  data() {
-    return {
-      isOpenModalCartList: false, // đóng modal
+  setup() {
+    const store = useStore();
+    const isOpenModalCartList = ref(false);
+
+    const getUsers = () => store.dispatch("user/getUsers");
+
+    const handleOpenModalCartList = () => {
+      isOpenModalCartList.value = true;
     };
-  },
-  methods: {
-    handleOpenModalCartList() {
-      this.isOpenModalCartList = true; // mở modal
-    },
-    handleCloseModalCartList() {
-      console.log("OKOK");
-      this.isOpenModalCartList = false; // đóng modal
-    },
-    ...mapActions({
-      getUsers: "getUsers",
-    }),
-  },
-  created() {
-    this.getUsers();
+
+    const handleCloseModalCartList = () => {
+      isOpenModalCartList.value = false;
+    };
+
+    getUsers();
+
+    return {
+      isOpenModalCartList,
+      handleOpenModalCartList,
+      handleCloseModalCartList,
+    };
   },
 };
 </script>
