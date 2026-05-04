@@ -11,7 +11,11 @@
         @keydown.enter="handleSearchName"
       />
       <div class="input-group-append">
-        <button class="btn btn-sm btn-gradient-primary" type="button" @click="searchUsersByName(searchName)">
+        <button
+          class="btn btn-sm btn-gradient-primary"
+          type="button"
+          @click="searchUsersByName(searchName)"
+        >
           Search
         </button>
       </div>
@@ -20,28 +24,33 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-
-const { mapActions } = createNamespacedHelpers('user');
+import { ref, watch } from "vue";
+import { useStore } from "vuex";
 
 export default {
-  name: "SearchBar",
-  data() {
-    return {
-      searchName: ""
-    }
-  },
-  watch: {
-    searchName(newValue) {
+  setup() {
+    const store = useStore();
+    const searchName = ref("");
+
+    const searchUsersByName = (name) => {
+      store.dispatch("user/searchUsersByName", name);
+    };
+
+    const handleSearchName = () => {
+      searchUsersByName(searchName.value);
+    };
+
+    watch(searchName, (newValue) => {
       if (newValue === "") {
-        this.searchUsersByName(newValue);
+        searchUsersByName(newValue);
       }
-    }
-  },
-  methods: {
-    ...mapActions({
-      searchUsersByName: "searchUsersByName",
-    })
+    });
+
+    return {
+      searchName,
+      searchUsersByName,
+      handleSearchName,
+    };
   },
 };
 </script>

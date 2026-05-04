@@ -43,14 +43,11 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-
+import { ref, toRefs } from "vue";
+import { useStore } from "vuex";
 import FormUser from "./FormUser.vue";
 
-const { mapActions } = createNamespacedHelpers("user");
-
 export default {
-  name: "UserItem",
   props: {
     user: {
       type: Object,
@@ -60,28 +57,33 @@ export default {
   components: {
     FormUser,
   },
-  data() {
-    return {
-      isOpenModalEditUser: false,
+  setup(props) {
+    const { user } = toRefs(props);
+    const store = useStore();
+    const isOpenModalEditUser = ref(false);
+
+    const removeUser = (id) => store.dispatch("user/removeUser", id);
+
+    const handleOpenModalEditUser = () => {
+      isOpenModalEditUser.value = true;
     };
-  },
-  methods: {
-    handleOpenModalEditUser() {
-      this.isOpenModalEditUser = true;
-    },
-    handleCloseModalEditUser() {
-      this.isOpenModalEditUser = false;
-    },
-    handleRemoveUser() {
+    const handleCloseModalEditUser = () => {
+      isOpenModalEditUser.value = false;
+    };
+    const handleRemoveUser = () => {
       if (!confirm("Do you want to remove this user?")) {
         return;
       }
 
-      this.removeUser(this.user.id);
-    },
-    ...mapActions({
-      removeUser: "removeUser",
-    }),
+      removeUser(user.value.id);
+    };
+
+    return {
+      isOpenModalEditUser,
+      handleOpenModalEditUser,
+      handleCloseModalEditUser,
+      handleRemoveUser,
+    };
   },
 };
 </script>

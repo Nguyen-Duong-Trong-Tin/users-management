@@ -1,23 +1,9 @@
 <template>
   <nav
-    class="
-      navbar
-      default-layout-navbar
-      col-lg-12 col-12
-      p-0
-      fixed-top
-      d-flex
-      flex-row
-    "
+    class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
   >
     <div
-      class="
-        text-center
-        navbar-brand-wrapper
-        d-flex
-        align-items-center
-        justify-content-center
-      "
+      class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
     >
       <a class="navbar-brand brand-logo" href="index.html"
         ><img
@@ -97,11 +83,7 @@
             <span class="count-symbol bg-warning"></span>
           </a>
           <div
-            class="
-              dropdown-menu dropdown-menu-right
-              navbar-dropdown
-              preview-list
-            "
+            class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
             aria-labelledby="messageDropdown"
           >
             <h6 class="p-3 mb-0">Messages</h6>
@@ -115,13 +97,7 @@
                 />
               </div>
               <div
-                class="
-                  preview-item-content
-                  d-flex
-                  align-items-start
-                  flex-column
-                  justify-content-center
-                "
+                class="preview-item-content d-flex align-items-start flex-column justify-content-center"
               >
                 <h6 class="preview-subject ellipsis mb-1 font-weight-normal">
                   Mark send you a message
@@ -139,13 +115,7 @@
                 />
               </div>
               <div
-                class="
-                  preview-item-content
-                  d-flex
-                  align-items-start
-                  flex-column
-                  justify-content-center
-                "
+                class="preview-item-content d-flex align-items-start flex-column justify-content-center"
               >
                 <h6 class="preview-subject ellipsis mb-1 font-weight-normal">
                   Cregh send you a message
@@ -163,13 +133,7 @@
                 />
               </div>
               <div
-                class="
-                  preview-item-content
-                  d-flex
-                  align-items-start
-                  flex-column
-                  justify-content-center
-                "
+                class="preview-item-content d-flex align-items-start flex-column justify-content-center"
               >
                 <h6 class="preview-subject ellipsis mb-1 font-weight-normal">
                   Profile picture updated
@@ -192,11 +156,7 @@
             <span class="count-symbol bg-danger"></span>
           </a>
           <div
-            class="
-              dropdown-menu dropdown-menu-right
-              navbar-dropdown
-              preview-list
-            "
+            class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
             aria-labelledby="notificationDropdown"
           >
             <h6 class="p-3 mb-0">Notifications</h6>
@@ -208,13 +168,7 @@
                 </div>
               </div>
               <div
-                class="
-                  preview-item-content
-                  d-flex
-                  align-items-start
-                  flex-column
-                  justify-content-center
-                "
+                class="preview-item-content d-flex align-items-start flex-column justify-content-center"
               >
                 <h6 class="preview-subject font-weight-normal mb-1">
                   Event today
@@ -232,13 +186,7 @@
                 </div>
               </div>
               <div
-                class="
-                  preview-item-content
-                  d-flex
-                  align-items-start
-                  flex-column
-                  justify-content-center
-                "
+                class="preview-item-content d-flex align-items-start flex-column justify-content-center"
               >
                 <h6 class="preview-subject font-weight-normal mb-1">
                   Settings
@@ -254,13 +202,7 @@
                 </div>
               </div>
               <div
-                class="
-                  preview-item-content
-                  d-flex
-                  align-items-start
-                  flex-column
-                  justify-content-center
-                "
+                class="preview-item-content d-flex align-items-start flex-column justify-content-center"
               >
                 <h6 class="preview-subject font-weight-normal mb-1">
                   Launch Admin

@@ -23,10 +23,16 @@ export default {
       type: Function,
     },
   },
-  methods: {
-    hanldeClose() {
-      this.handelCloseModal();
-    },
+  setup(props) {
+    const handleClose = () => {
+      if (props.handelCloseModal) {
+        props.handelCloseModal();
+      }
+    };
+
+    return {
+      handleClose,
+    };
   },
 };
 </script>
@@ -42,6 +48,7 @@ export default {
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
 }
+
 .modal__container {
   width: 800px;
   height: 70vh;
@@ -80,6 +87,7 @@ export default {
   text-align: center;
   font-size: 30px;
 }
+
 .modal__close:hover {
   background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;

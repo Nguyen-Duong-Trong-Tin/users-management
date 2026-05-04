@@ -1,35 +1,39 @@
 <template>
   <tbody>
-    <user-item v-for="user in usersBySearchName" :key="user.id" :user="user"></user-item>
+    <user-item
+      v-for="user in usersBySearchName"
+      :key="user.id"
+      :user="user"
+    ></user-item>
   </tbody>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-
+import { computed } from "vue";
+import { useStore } from "vuex";
 import UserItem from "./UserItem.vue";
-
-const { mapState, mapGetters } = createNamespacedHelpers('user');
 
 export default {
   components: {
     UserItem,
   },
-  computed: {
-    loading() {
-      return false;
-    },
-    // maleUsers() {
-    //   // return this.$store.getters.maleUsers;
-    //   return this.$store.getters.usersByGender("Nam");
-    // },
-    ...mapState({
-      users: state => state.users,
-    }),
-    ...mapGetters({
-      maleUsers: 'maleUsers',
-      usersBySearchName: 'usersBySearchName',
-    })
+  setup() {
+    const store = useStore();
+
+    const loading = computed(() => false);
+
+    const users = computed(() => store.state.user.users);
+    const maleUsers = computed(() => store.getters["user/maleUsers"]);
+    const usersBySearchName = computed(
+      () => store.getters["user/usersBySearchName"]
+    );
+
+    return {
+      loading,
+      users,
+      maleUsers,
+      usersBySearchName,
+    };
   },
 };
 </script>

@@ -10,43 +10,47 @@
   <ChildLifeCycle v-if="count % 2 === 0" />
 </template>
 <script>
+import {
+  onBeforeMount,
+  onBeforeUpdate,
+  onUpdated,
+  ref,
+  useTemplateRef,
+} from "vue";
 import ChildLifeCycle from "./ChildLifeCycle.vue";
 
 export default {
-  name: "DemoLifeCycle",
   components: {
     ChildLifeCycle,
   },
-  data() {
-    return {
-      count: 0,
+  setup() {
+    const count = ref(0);
+    const input = useTemplateRef("my-input");
+
+    const handleIncrement = () => {
+      ++count.value;
     };
-  },
-  methods: {
-    handleIncrement() {
-      ++this.count;
-    },
-  },
-  beforeCreate() {
-    console.log("beforeCreate", this.count);
-    // this.handleIncrement();
-  },
-  created() {
-    console.log("created", this.count);
-    this.handleIncrement();
-  },
-  beforeMount() {
-    console.log("beforeMount", this.$refs.myInput);
-  },
-  mounted() {
-    console.log("mounted", this.$refs.myInput);
-    this.$refs.myInput.focus();
-  },
-  beforeUpdate() {
-    console.log("Loading = true");
-  },
-  updated() {
-    console.log("Loading = false");
+
+    console.log("beforeCreate", count.value);
+    console.log("created", count.value);
+    handleIncrement();
+
+    onBeforeMount(() => {
+      console.log("beforeMount", input.value);
+      input.value.focus();
+    });
+
+    onBeforeUpdate(() => {
+      console.log("Loading = true");
+    });
+    onUpdated(() => {
+      console.log("Loading = false");
+    });
+
+    return {
+      count,
+      handleIncrement,
+    };
   },
 };
 </script>
